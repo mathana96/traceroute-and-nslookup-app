@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var myLatLng = {lat: 53.2734, lng: 7.78};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: myLatLng
+        });
+
+        // Loop through our array of markers & place each one on the map  
+
+        {% for n in list %}
+        {% set coord = n.split(',') %}
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng({{ coord[0] }}, {{ coord[1] }}),
+                    map: map,
+                    title: 'Click Me '
+                });
+                     {% endfor %}
+        // var uluru = {lat: -25.363, lng: 131.044};
+        // var map = new google.maps.Map(document.getElementById('map'), {
+        //   zoom: 4,
+        //   center: uluru
+        // });
+        // var marker = new google.maps.Marker({
+        //   position: uluru,
+        //   map: map
+        // });
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key="INSERTKEY"&callback=initMap">
+    </script>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+  </head>
+
+  <body>
+    <h1>Tester</h1>
+      {% for n in list %}
+      {% set coord = n.split(',') %}
+        <p>Lat: {{ coord[0] }}</p>
+      {% endfor %}
+    </body>
+</html> -->
