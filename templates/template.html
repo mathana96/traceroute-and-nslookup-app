@@ -21,30 +21,53 @@
         });
 
         // Loop through our array of markers & place each one on the map  
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var labelIndex = 0;
+        {% for geo in geolist %}
+        {% set coord = geo['loc'].split(',') %}
+        {% set country = geo['country'] %}
+        {% set ipaddr = geo['ip'] %}
+        {% set org = geo['org'] %}
 
-        {% for n in list %}
-        {% set coord = n.split(',') %}
+                var contentString =  '<strong><p>Country: {{ country }}</p> <p>IP address: {{ ipaddr }}</p> <p>Org: {{ org }}</p></strong>';
+
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng({{ coord[0] }}, {{ coord[1] }}),
+                    label: labels[labelIndex++ % labels.length],
                     map: map,
+                    contentString: contentString,
                     title: 'Click Me '
                 });
+
+                var infowindow = new google.maps.InfoWindow({});
+
+                marker.addListener('click', function() {
+                  infowindow.setContent(this.contentString);
+                             infowindow.open(map, this);
+                     });
+
                      {% endfor %}
-        // var uluru = {lat: -25.363, lng: 131.044};
-        // var map = new google.maps.Map(document.getElementById('map'), {
-        //   zoom: 4,
-        //   center: uluru
-        // });
-        // var marker = new google.maps.Marker({
-        //   position: uluru,
-        //   map: map
-        // });
+
       }
 
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key="INSERTKEY"&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK_JiBbgnyNYXXwaFWAyIPkVFL80a-NAc&callback=initMap">
     </script>
+
+    <section>
+      {% for geo in geolist %}
+      <strong>
+        <h3>IP address: {{ geo['ip'] }}</h3>
+        <h3>Hostname: {{ geo['hostname'] }}</h3>
+        <h3>Country: {{ geo['country'] }}</h3>
+        <h3>Organisation: {{ geo['org'] }}</h3>
+      </strong>
+
+      {% endfor %}
+
+<!-- Add number of hops and stuff -->
+    </section>
   </body>
 </html>
 

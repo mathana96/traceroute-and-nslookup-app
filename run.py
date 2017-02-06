@@ -15,10 +15,10 @@ app = Flask(__name__)
 def main():
     dest_name = 'google.com'	
     dest_addr = socket.gethostbyname(dest_name)
-    port = 33434
+    port = 33434        #Port number for traceroute
     max_hops = 30
-    icmp = socket.getprotobyname('icmp')
-    udp = socket.getprotobyname('udp')
+    icmp = socket.getprotobyname('icmp') #Protocols used
+    udp = socket.getprotobyname('udp')  #Protocols used
     ttl = 1
     IPlist = []
 
@@ -43,7 +43,7 @@ def main():
         tries = 1
         while not finished and tries > 0:
             try:
-                _, curr_addr = recv_socket.recvfrom(512)
+                _, curr_addr = recv_socket.recvfrom(512) #512 is the port number for TCP/UDP
                 finished = True
                 curr_addr = curr_addr[0]
                 # try:
@@ -73,8 +73,9 @@ def main():
 
 
 # def reverseDNS(IPlist):
-    IPlist = list(set(IPlist))
     print(IPlist)
+    #IPlist = list(set(IPlist))
+    
     geolist = []
     for ip in IPlist:
         url = "http://ipinfo.io/" + ip + "/json"
@@ -82,10 +83,14 @@ def main():
         info = str(urllib.urlopen(url).read()) 
         data = json.loads(info) 
         if (("bogon" in data) == False):
-            geolist.append(data['loc'])
-    geolist = list(set(geolist))
+            for geo in geolist:
+                if (data['loc']) in geo.values():
+                    geolist.remove(geo)
+
+            geolist.append(data)
     print(geolist)
-    return render_template('template.html', list=geolist)
+    
+    return render_template('template.html', geolist=geolist)
 
 
 
