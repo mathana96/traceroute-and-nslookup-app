@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var myLatLng = {lat: 53.2734, lng: 7.78};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: myLatLng
+        });
+
+        {% for geo in geolist %}
+        {% set coord = geo['loc'].split(',') %}
+        {% set country = geo['country'] %}
+        {% set ipaddr = geo['ip'] %}
+        {% set org = geo['org'] %}
+
+                var contentString =  '<strong><p>Country: {{ country }}</p> <p>IP address: {{ ipaddr }}</p> <p>Org: {{ org }}</p></strong>';
+
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng({{ coord[0] }}, {{ coord[1] }}),
+                    // label: labels[labelIndex++ % labels.length],
+                    map: map,
+                    contentString: contentString,
+                    title: 'Click Me '
+                });
+
+                     {% endfor %}
+
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK_JiBbgnyNYXXwaFWAyIPkVFL80a-NAc&callback=initMap">
+    </script>
+
+    <section>
+      {% for geo in geolist %}
+      <strong>
+        <h3>IP address: {{ geo['ip'] }}</h3>
+        <h3>Hostname: {{ geo['hostname'] }}</h3>
+        <h3>Country: {{ geo['country'] }}</h3>
+        <h3>Organisation: {{ geo['org'] }}</h3>
+      </strong>
+
+      {% endfor %}
+
+<!-- Add number of hops and stuff -->
+    </section>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <title>Test</title>
+  </head>
+
+  <body>
+    <h1>Tester</h1>
+      {% for n in list %}
+      {% set coord = n.split(',') %}
+        <p>Lat: {{ coord[0] }}</p>
+      {% endfor %}
+    </body>
+</html> -->
