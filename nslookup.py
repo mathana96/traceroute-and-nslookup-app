@@ -1,5 +1,7 @@
 """
+nslookup code from: (username)
 http://stackoverflow.com/questions/12297500/python-module-for-nslookup
+
 """
 
 import subprocess
@@ -10,7 +12,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    process = subprocess.Popen(["nslookup", "www.google.com"], stdout=subprocess.PIPE)
+    dest_name = "www.google.com"
+    process = subprocess.Popen(["nslookup", dest_name], stdout=subprocess.PIPE)
     output = process.communicate()[0].split('\n')
 
     IPlist = []
@@ -20,7 +23,6 @@ def main():
     IPlist.pop(0)
 
     print IPlist
-    
 
     geolist = []
     for ip in IPlist:
@@ -29,14 +31,10 @@ def main():
         info = str(urllib.urlopen(url).read()) 
         data = json.loads(info) 
         if (("bogon" in data) == False):
-            # for geo in geolist:
-                # if (data['loc']) in geo.values():
-                #     geolist.remove(geo)
-
             geolist.append(data)
     print(geolist)
 
-    return render_template('template2.html', geolist=geolist)
+    return render_template('nslookup.html', geolist=geolist)
 
 if __name__ == '__main__':
     app.run(debug=True)

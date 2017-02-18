@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
     <style>
        #map {
         height: 400px;
         width: 100%;
        }
     </style>
+    <script type="css" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css"></script>
   </head>
-  <body>
-    <h3>My Google Maps Demo</h3>
+  <body class="ui container">
+    <h2 class="ui block header">
+      <i class="marker icon"></i>
+      <div class="content">
+        nslookup demo
+        <div class="sub header">Mathana Nair Sreedaran | Internetworking | BSc. (Hons) in Applied Computing @ WIT</div>
+      </div>
+    </h2>
     <div id="map"></div>
     <script>
       function initMap() {
@@ -46,20 +55,42 @@
     </script>
 
     <section>
-      {% for geo in geolist %}
-      <strong>
-        <h3>IP address: {{ geo['ip'] }}</h3>
-        <h3>Hostname: {{ geo['hostname'] }}</h3>
-        <h3>Country: {{ geo['country'] }}</h3>
-        <h3>Organisation: {{ geo['org'] }}</h3>
-      </strong>
+ 
+      <div class="ui segment">
+        <h2 class="ui header">Total IP addresses found: {{ geolist|length }}</h2>
+      </div>
 
-      {% endfor %}
+     
+      <table class="ui celled table">
+        <thead>
+          <tr><th>IP address</th>
+          <th>Hostname</th>
+          <th>Country</th>
+          <th>Organisation</th>
+        </tr></thead>
+ {% for geo in geolist %}
+        <tbody>
+          <tr>
+            <td>{{ geo['ip'] }}</td>
+            <td>{{ geo['hostname'] }}</td>
+            <td>{{ geo['country'] }}</td>
+            <td>{{ geo['org'] }}</td>
+          </tr>
+        </tbody>
+
+  {% endfor %}      
+       </table> 
+           </section>
+         </body>
+       </html>
+
+
+
 
 <!-- Add number of hops and stuff -->
-    </section>
-  </body>
-</html>
+ 
+
+
 
 <!-- <!DOCTYPE html>
 <html>
