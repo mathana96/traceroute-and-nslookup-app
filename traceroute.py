@@ -69,13 +69,19 @@ def main():
             pass
 
         if curr_addr is not None:
+            curr_host = "%s (%s)" % (curr_name, curr_addr)
             IPlist.append(curr_addr)
+
+        else:
+            curr_host = ""
+            
+        print("%s\n" % (curr_host))    
 
         ttl += 1
         if curr_addr == dest_addr or ttl > max_hops:
             break
 
-    print(IPlist)
+    # print(IPlist)
     
     geolist = []
     for ip in IPlist:
@@ -89,9 +95,9 @@ def main():
                     geolist.remove(geo)
 
             geolist.append(data)
-    print(geolist)
+    # print(geolist)
     
-    return render_template('traceroute.html', geolist=geolist)
+    return render_template('traceroute.html', geolist=geolist, IPlist=IPlist)
 
 
 

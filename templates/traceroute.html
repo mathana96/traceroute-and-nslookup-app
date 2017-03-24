@@ -65,6 +65,7 @@
 
     <section>
            <div class="ui segment">
+            <h2 class="ui header">Total hops: {{ IPlist|length }}</h2>
              <h2 class="ui header">Total geo-traceable hops: {{ geolist|length }}</h2>
            </div>
 
@@ -83,6 +84,29 @@
                  <td>{{ geo['hostname'] }}</td>
                  <td>{{ geo['country'] }}</td>
                  <td>{{ geo['org'] }}</td>
+               </tr>
+             </tbody>
+
+       {% endfor %}      
+            </table> 
+
+
+
+    </section>
+
+        <section>
+
+      
+
+          
+           <table class="ui celled table">
+             <thead>
+               <tr><th>IP address</th>
+             </tr></thead>
+      {% for IP in IPlist %}
+             <tbody>
+               <tr>
+                 <td>{{ IP }}</td>
                </tr>
              </tbody>
 
