@@ -29,6 +29,7 @@ def main():
     udp = socket.getprotobyname('udp')  #Protocols used
     ttl = 1
     IPlist = []
+    geolist = []
 
 
     while True:
@@ -51,7 +52,7 @@ def main():
         tries = 1
         while not finished and tries > 0:
             try:
-                _, curr_addr = recv_socket.recvfrom(512) #512 is the port number for TCP/UDP
+                _, curr_addr = recv_socket.recvfrom(512)
                 finished = True
                 curr_addr = curr_addr[0]
                 # try:
@@ -83,7 +84,7 @@ def main():
 
     # print(IPlist)
     
-    geolist = []
+    
     for ip in IPlist:
         url = "http://ipinfo.io/" + ip + "/json"
         print(url)
