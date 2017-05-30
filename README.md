@@ -14,3 +14,7 @@ A basic application which superimposes the output of `traceroute` and `nslookup`
 #### `nslookup`
 ![](python-nslookup.png)
 
+### Improvements for the future
+* A front-end
+* Deployment
+* Add features/look-and-feel
