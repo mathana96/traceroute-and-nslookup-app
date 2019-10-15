@@ -17,8 +17,6 @@ import urllib
 from flask import Flask, render_template
 app = Flask(__name__)
 
-
-
 @app.route("/")
 def main():
     dest_name = 'google.com'	
@@ -30,7 +28,6 @@ def main():
     ttl = 1
     IPlist = []
     geolist = []
-
 
     while True:
         recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, icmp)
@@ -66,9 +63,6 @@ def main():
         send_socket.close()
         recv_socket.close()
         
-        if not finished:
-            pass
-
         if curr_addr is not None:
             curr_host = "%s (%s)" % (curr_name, curr_addr)
             IPlist.append(curr_addr)
@@ -82,9 +76,6 @@ def main():
         if curr_addr == dest_addr or ttl > max_hops:
             break
 
-    # print(IPlist)
-    
-    
     for ip in IPlist:
         url = "http://ipinfo.io/" + ip + "/json"
         print(url)
@@ -96,11 +87,8 @@ def main():
                     geolist.remove(geo)
 
             geolist.append(data)
-    # print(geolist)
     
     return render_template('traceroute.html', geolist=geolist, IPlist=IPlist)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

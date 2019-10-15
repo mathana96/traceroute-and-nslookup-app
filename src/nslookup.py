@@ -17,14 +17,15 @@ def main():
     output = process.communicate()[0].split('\n')
 
     IPlist = []
+    geolist = []
+
     for data in output:
         if 'Address' in data:
             IPlist.append(data.replace('Address: ',''))
     IPlist.pop(0)
 
-    print IPlist
+    print(IPlist)
 
-    geolist = []
     for ip in IPlist:
         url = "http://ipinfo.io/" + ip + "/json"
         print(url)
