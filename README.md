@@ -9,10 +9,10 @@ A basic application which superimposes the output of `traceroute` and `nslookup`
 ### Below are screenshots of the outputs;
 
 #### `traceroute`
-![](python-traceroute.png)
+![](images/python-traceroute.png)
 
 #### `nslookup`
-![](python-nslookup.png)
+![](images/python-nslookup.png)
 
 ### Improvements for the future
 * A front-end
